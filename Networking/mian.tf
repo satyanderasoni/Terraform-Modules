@@ -14,6 +14,7 @@ resource "azurerm_virtual_network" "vnet" {
 }
 
 resource "azurerm_subnet" "subnet" {
+  depends_on           = [azurerm_virtual_network.vnet]
   for_each             = length(var.subnets) > 0 ? var.subnets : {}
   name                 = each.value.name
   resource_group_name  = local.resource_group_name
@@ -22,6 +23,7 @@ resource "azurerm_subnet" "subnet" {
 }
 
 resource "azurerm_network_interface" "nic" {
+  depends_on          = [azurerm_subnet.subnet]
   for_each            = length(var.nics) > 0 ? var.nics : {}
   name                = each.value.name
   location            = local.location
