@@ -1,6 +1,7 @@
 locals {
   resource_group_name = var.resource_group_name
   location            = var.location
+  tags                = var.tags
 }
 
 resource "azurerm_virtual_network" "vnet" {
@@ -9,6 +10,7 @@ resource "azurerm_virtual_network" "vnet" {
   location            = local.location
   resource_group_name = local.resource_group_name
   address_space       = each.value.address_space
+  tags                = local.tags
 }
 
 resource "azurerm_subnet" "subnet" {
@@ -29,4 +31,5 @@ resource "azurerm_network_interface" "nic" {
     subnet_id                     = each.value.subnet_id
     private_ip_address_allocation = "static"
   }
+  tags = local.tags
 }
