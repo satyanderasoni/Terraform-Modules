@@ -1,7 +1,7 @@
 output "vnets" {
   description = "Details of all created vnets"
   value = {
-    for k, v in azurerm_virtual_network.vnet : 
+    for k, v in azurerm_virtual_network.vnet :
     k => {
       name                = v.name
       location            = v.location
@@ -24,18 +24,16 @@ output "subnets" {
 }
 
 output "nics" {
-    description = "Details of all created nics"
-    value = {
-    for k, v in azurerm_network_interface.nic : 
+  description = "Details of all created nics"
+  value = {
+    for k, v in azurerm_network_interface.nic :
     k => {
       name                = v.name
       location            = v.location
       resource_group_name = v.resource_group_name
-      ip_configuration {
-        name                          = v.ip_configuration[0].name
-        subnet_id                     = v.ip_configuration[0].subnet_id
-        private_ip_address_allocation = v.ip_configuration[0].private_ip_address_allocation
-      }
+      private_ip_address  = v.ip_configuration[0].private_ip_address
+      subnet_id           = v.ip_configuration[0].subnet_id
+
     }
   }
 }
