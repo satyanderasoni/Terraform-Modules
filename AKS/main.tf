@@ -1,7 +1,7 @@
 ########################################
 # Azure Kubernetes Service (AKS) Setup #
 ########################################
-
+data "azurerm_client_config" "current" {}
 # ----------------------------
 # AKS Cluster Resource
 # ----------------------------
@@ -44,7 +44,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   role_based_access_control_enabled = true
   azure_active_directory_role_based_access_control {
     #managed                = true
-    admin_group_object_ids = [var.admin_group_object_id] # Azure AD Group Object ID for AKS Admins
+    admin_group_object_ids = [data.azurerm_client_config.current.admin_group_object_id] # Azure AD Group Object ID for AKS Admins
   }
 
   # ---- Tags ----
@@ -123,13 +123,14 @@ resource "azurerm_monitor_diagnostic_setting" "aks_diag" {
   target_resource_id         = azurerm_kubernetes_cluster.aks.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
 
-  log {
+  enabled_log {
     category = "kube-audit"
     enabled  = true
   }
 
+
   # ---- Metrics ----
-  metric {
+  enabled_metric {
     category = "AllMetrics"
     enabled  = true
   }

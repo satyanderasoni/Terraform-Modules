@@ -18,7 +18,7 @@ variable "dns_prefix" {
   type        = string
 }
 
-variable "admin_group_object_id" {
-  description = "Azure AD group object ID for AKS admins"
-  type        = string
-}
+# variable "admin_group_object_id" {
+#   description = "Azure AD group object ID for AKS admins"
+#   type        = string
+# }

@@ -40,10 +40,8 @@ resource "azurerm_role_assignment" "kv_admin" {
 # Optional DR secret sync
 # -----------------------
 resource "null_resource" "kv_sync" {
-  count = var.enable_sync ? length([for k, v in var.keyvaults : k if v.role == "dr"]) : 0
-
+  count      = var.enable_sync ? length([for k, v in var.keyvaults : k if v.role == "dr"]) : 0
   depends_on = [azurerm_key_vault.kv]
-
   provisioner "local-exec" {
     command = <<EOT
       primary_name=$(for k, v in var.keyvaults : k if v.role == "primary")
