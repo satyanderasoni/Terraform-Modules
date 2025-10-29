@@ -11,7 +11,7 @@ resource "azurerm_key_vault" "kv" {
   resource_group_name        = each.value.resource_group_name
   sku_name                   = var.sku_name
   tenant_id                  = data.azurerm_client_config.current.tenant_id
-  enable_rbac_authorization  = true
+  rbac_authorization_enabled = true
   soft_delete_retention_days = var.soft_delete_days
   purge_protection_enabled   = var.purge_protection
   tags                       = each.value.tags
@@ -33,7 +33,7 @@ resource "azurerm_role_assignment" "kv_admin" {
   for_each             = azurerm_key_vault.kv
   scope                = each.value.id
   role_definition_name = "Key Vault Administrator"
-  principal_id         = data.azurerm_client_config.current.admin_object_id
+  principal_id         = data.azurerm_client_config.current.object_id
 }
 
 # -----------------------

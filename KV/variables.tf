@@ -3,10 +3,10 @@ variable "tenant_id" {
   type        = string
 }
 
-variable "admin_object_id" {
-  description = "Azure AD Object ID for Key Vault admin"
-  type        = string
-}
+# variable "admin_object_id" {
+#   description = "Azure AD Object ID for Key Vault admin"
+#   type        = string
+# }
 
 variable "keyvaults" {
   description = "Map of Key Vaults with their properties. Role: primary or dr"
