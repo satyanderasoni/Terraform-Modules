@@ -19,9 +19,7 @@ variable "dns_prefix" {
 }
 variable "acr_id" {
   description = "value for acr_id"
-  type = string
-}
-  
+  type        = string
 }
 
 # variable "admin_group_object_id" {
