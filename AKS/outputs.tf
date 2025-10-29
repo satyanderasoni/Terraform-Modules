@@ -32,12 +32,6 @@ output "aks_kubelet_identity" {
   value       = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
 }
 
-# ---- Azure AD Integration Group ----
-output "aks_admin_group_object_id" {
-  description = "The Azure AD admin group assigned to the AKS cluster"
-  value       = var.admin_group_object_id
-}
-
 # ---- AKS Version ----
 output "aks_version" {
   description = "The Kubernetes version of the AKS cluster"
