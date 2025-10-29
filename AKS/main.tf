@@ -51,6 +51,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     #managed                = true
     admin_group_object_ids = [data.azuread_group.aks_admins.id] # ✅ dynamic AD group lookup
   }
+  # ✅ Add OMS agent (Log Analytics integration)
+  oms_agent {
+    log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
+  }
   # ---- Tags ----
   tags = {
     Environment = "dev"        # Environment (dev, uat, prod)
@@ -58,6 +62,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     CostCenter  = "App001"     # Cost center for tracking
     ManagedBy   = "Terraform"  # Management tag
   }
+
+  depends_on = [
+    azurerm_log_analytics_workspace.law
+  ]
 }
 
 # ----------------------------
@@ -98,13 +106,6 @@ resource "azurerm_log_analytics_workspace" "law" {
   resource_group_name = var.resource_group_name
   sku                 = "PerGB2018"
   retention_in_days   = 30
-}
-# ----------------------------
-# OMS Agent (AKS Monitoring)
-# ----------------------------
-resource "azurerm_kubernetes_cluster_oms_agent" "monitoring" {
-  kubernetes_cluster_id      = azurerm_kubernetes_cluster.aks.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.law.id
 }
 
 # ----------------------------
