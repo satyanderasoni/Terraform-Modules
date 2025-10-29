@@ -50,11 +50,7 @@ output "log_analytics_workspace_id" {
   value       = azurerm_log_analytics_workspace.law.id
 }
 
-# ---- ACR ID ----
-output "acr_id" {
-  description = "The ID of the Azure Container Registry used for AKS image pulls"
-  value       = azurerm_container_registry.acr.id
-}
+
 
 # ---- Cluster Admin Credentials ----
 # (Optional — use carefully, for CI/CD automation only)
