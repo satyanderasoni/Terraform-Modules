@@ -43,10 +43,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
   # Enforces role-based authentication via Azure AD
   role_based_access_control_enabled = true
   azure_active_directory_role_based_access_control {
-    #managed                = true
-    admin_group_object_ids = [data.azurerm_client_config.current.admin_group_object_id] # Azure AD Group Object ID for AKS Admins
+    managed                = true
+    admin_group_object_ids = [data.azurerm_client_config.current.object_id] # Azure AD Group Object ID for AKS Admins
   }
-
   # ---- Tags ----
   tags = {
     Environment = "dev"        # Environment (dev, uat, prod)
